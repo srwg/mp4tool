@@ -1,0 +1,1 @@
+adb pull /storage/sdcard1/Android/data/com.rabbitxp.$1/files/$2 .

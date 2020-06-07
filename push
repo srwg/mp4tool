@@ -1,0 +1,1 @@
+adb push $2 /storage/sdcard1/Android/data/com.rabbitxp.$1/files/$3

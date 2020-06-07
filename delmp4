@@ -1,0 +1,2 @@
+adb shell 'rm -rf  /storage/sdcard1/Android/data/com.rabbitxp.mp4/files/mp4'
+adb shell 'rm  /storage/sdcard1/Android/data/com.rabbitxp.mp4/files/cut/*'

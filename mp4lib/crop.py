@@ -21,11 +21,11 @@ class Crop:
 
   def onKey(self, event):
     if event.char == 'n':
-      self.t += 15
+      self.t += 4
       self.g.showImage(self.getSnapshot())
       return True
     if event.char == 'p':
-      self.t -= 15
+      self.t -= 4
       if self.t < 0: self.t = 0
       self.g.showImage(self.getSnapshot())
       return True

@@ -24,6 +24,10 @@ class Crop:
       self.t += 4
       self.g.showImage(self.getSnapshot())
       return True
+    if event.char == 'N':
+      self.t += 20
+      self.g.showImage(self.getSnapshot())
+      return True
     if event.char == 'p':
       self.t -= 4
       if self.t < 0: self.t = 0

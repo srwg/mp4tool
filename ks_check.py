@@ -1,6 +1,7 @@
+#!/usr/bin/env python
 import glob, os, shutil
 
-OUT_PATH = '/storage/sdcard1/Movies/ks/'
+OUT_PATH = './'
 
 def readtask(fn):
   attr = {}
@@ -36,10 +37,10 @@ def getname(name):
 def checkstatus(lastfn):
   return os.path.exists(lastfn)
 
-for task in glob.glob('/sdcard/kuaishou/download/*.task'):
+for task in glob.glob('*.task'):
   attr = readtask(task)
   suffix = '.' + attr['fileType']
-  path = attr['mediaFileDir']
+  path = task[:-5] + '/'
   num = int(attr['numOfChapters'])
   lastfn = path + 'chapter' + str(num) + suffix
   if not checkstatus(lastfn):

@@ -3,23 +3,20 @@
 import os, sys, subprocess
 from PIL import Image
 
-BAD = '/Users/ningma/ks/work/'
-MISSING_STREAM = BAD + 'missing_stream/'
-CHANGE_FPS = BAD + 'duration/'
-DONE = '/Users/ningma/ks/mp4/'
+DONE = '/Users/ningma/ks/265/'
 
-V_OPTION = ' -r 25 -video_track_timescale 25000 -pix_fmt yuv420p -c:v libx264 -profile:v high -level 3.1 -crf 20 -g 250 -keyint_min 1 -sc_threshold 90 -refs 2 '
+V_OPTION = ' -r 25 -video_track_timescale 25000 -pix_fmt yuv420p -c:v libx265 -x265-params "no-open-gop=1:keyint=250:min-keyint=1:scenecut=90:scenecut-bias=50:crf=25"'
 
 A_OPTION = ' -ar 24000 -ac 1 -c:a libfdk_aac -profile:a aac_he -vbr 1 '
 
 golden_v = {
-  'profile': 'High',
-  'codec_tag': '0x31637661',
-  #'has_b_frames': '2',
+  'profile': 'Main',
+  'codec_tag': '0x31766568',
+  'has_b_frames': '2',
   'pix_fmt': 'yuv420p',
   'refs': '1',
-  'level': '31',
-  'chroma_location': 'left',
+  'level': '63',
+  #'chroma_location': 'left',
   'time_base': '1/25000',
   'r_frame_rate': '25/1'
 }
@@ -112,11 +109,12 @@ def verify(f, g, streams):
   w = v['width']
   h = v['height']
   v_option = '-c:v copy '
-  if w != v['coded_width'] and v['coded_width'] != '848' or v['coded_height'] != '368':
+  if w != v['coded_width'] and v['coded_width'] != '848' or h != v['coded_height'] and v['coded_height'] != '368':
     v_option = V_OPTION
   else:
     for k in golden_v.keys():
       if v[k] != golden_v[k]:
+        print v[k]
         v_option = V_OPTION
         break
 

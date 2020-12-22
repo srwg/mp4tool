@@ -18,38 +18,33 @@ import os
 
 def cut(fn):
   name = fn[:-4]
+  if not os.path.exists(name + '.mp4'):
+    return
   index = 0
   fname  = AFTER_CUT + fn[:-3] + 'mp4'
   if os.path.exists(fname):
     os.rename(fname, AFTER_CUT + fn + '_bak')
-  cmd2 = 'MP4Box "' + fname + '"'
-  clean = 'rm'
-  done = True
+  fl = open('_list', 'w')
+  clean = 'rm _list'
   hasLine = False
   for l in open('cut/' + name + '.cut').readlines():
     hasLine = True
-    done = False
-    cmd = 'MP4Box' + gettime(l) + ' "' + name + '.mp4" -out tmp' + str(index) + '.mp4'
+    cmd = 'MP4Box' + gettime(l) + ' "' + name + '.mp4" -out _tmp' + str(index) + '.mp4'
     print cmd
     os.system(cmd)
-    cmd2 += ' -cat tmp' + str(index) + '.mp4'
-    clean += ' tmp' + str(index) + '.mp4'
+    fl.write('file _tmp' + str(index) + '.mp4\n')
+    clean += ' _tmp' + str(index) + '.mp4'
     index += 1
-    if index >= 15:
-      os.system(cmd2)
-      os.system(clean)
-      index = 0
-      cmd2 = 'MP4Box "' + fname + '"'
-      clean = 'rm'
-      done = True
-  if not done:
-    os.system(cmd2)
-    os.system(clean)
+  fl.close()
   if not hasLine:
     os.rename(name + '.mp4', fname)
   else:
+    cmd = 'ffmpeg -f concat -safe 0 -i _list -c copy "' + fname + '"'
+    print cmd
+    os.system(cmd)
     os.rename(name + '.mp4', 'cut_' + name + '.mp4')
-  #os.remove('cut/' + name + '.cut')
+    os.system(clean)
+  os.remove('cut/' + name + '.cut')
 
 import glob, shutil
 for c in glob.glob('cut/*.cut'):

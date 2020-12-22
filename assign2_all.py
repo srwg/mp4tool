@@ -2,22 +2,22 @@
 
 import glob
 import sys
-from mp4lib import assign
+from mp4lib import assign2
 
 for i in glob.glob('*.mp4'):
   if len(sys.argv) > 1:
-    assign.assign(i, True)
+    assign2.assign(i, True)
   else:
-    assign.assign(i)
+    assign2.assign(i)
 
 for i in glob.glob('*.avi'):
   if len(sys.argv) > 1:
-    assign.assign(i, True)
+    assign2.assign(i, True)
   else:
-    assign.assign(i)
+    assign2.assign(i)
 
 for i in glob.glob('*.rmvb'):
   if len(sys.argv) > 1:
-    assign.assign(i, True)
+    assign2.assign(i, True)
   else:
-    assign.assign(i)
+    assign2.assign(i)
